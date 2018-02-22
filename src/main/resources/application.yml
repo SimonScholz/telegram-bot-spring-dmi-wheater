@@ -1,0 +1,16 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 9000
+spring:
+  application:
+    name: telegram-bot-spring-dmi-wheater
+  profiles:
+    active:
+    - webhook
+    - admin
+bot:
+  api:
+    url: https://api.telegram.org/bot
