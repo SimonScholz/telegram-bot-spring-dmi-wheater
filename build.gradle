@@ -38,16 +38,17 @@ configurations {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-webflux')
-	// compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
+
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
+	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
+
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-devtools')
 
-	compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
 	compile('org.springframework.cloud:spring-cloud-stream-reactive')
-	// tag::deps[]
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
-	// end::deps[]
 
 	compile('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
