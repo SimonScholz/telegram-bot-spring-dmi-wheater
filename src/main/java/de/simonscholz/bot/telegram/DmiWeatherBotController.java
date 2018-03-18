@@ -15,6 +15,8 @@ import de.simonscholz.bot.telegram.service.DmiUpdateHandlerService;
 import de.simonscholz.telegram.bot.api.TelegramBotClient;
 import de.simonscholz.telegram.bot.api.domain.TelegramListResponse;
 import de.simonscholz.telegram.bot.api.domain.Update;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -25,13 +27,17 @@ class DmiWeatherBotController {
 	private DmiUpdateHandlerService updateHandler;
 	private TelegramBotClient botClient;
 
-	public DmiWeatherBotController(DmiUpdateHandlerService updateHandler, TelegramBotClient botClient) {
+	private Counter requestCounter;
+
+	public DmiWeatherBotController(DmiUpdateHandlerService updateHandler, TelegramBotClient botClient, MeterRegistry meterRegistry) {
 		this.updateHandler = updateHandler;
 		this.botClient = botClient;
+		requestCounter = meterRegistry.counter("de.simonscholz.request.count");
 	}
 
 	@PostMapping("/dmiWebhook")
 	public Mono<Void> webhook(@RequestBody Update update) {
+		requestCounter.increment();
 		return updateHandler.handleUpdate(update);
 	}
 
