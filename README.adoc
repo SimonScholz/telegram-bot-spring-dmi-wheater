@@ -62,6 +62,28 @@ By default the `PollBot` is disabled. To enable it the _poll_ profile has to be 
 Long polling should only be used in case it is not possible to provide an ssl webhook endpoint.
 ====
 
+== Testing the dmi weather bot with curl
+
+In order to test the bot you can send the following JSON to the dispatcher (http://localhost:8080/bot/dmiWebhook), which forwards the `Update` to the dmi weather bot.
+
+
+[IMPORTANT]
+====
+In production you want to run the dispatcher on port 443 or 8443 and ssl secure it so that telegram really talks with it.
+====
+
+
+[source, console]
+----
+curl -H "Content-Type: application/json" -X POST -d '{"update_id":463166625, "message":{"message_id":256,"from":{"id":***my id***,"is_bot":false,"first_name":"Simon","last_name":"S","language_code":"en-US"},"chat":{"id":*** the chat id ***,"first_name":"Simon","last_name":"S","type":"private"},"date":1519229850,"text":"/now Hamburg","entities":[{"offset":0,"length":4,"type":"bot_command"}]}}' http://localhost:8080/bot/dmiWebhook
+----
+
+
+[CAUTION]
+====
+ *** the chat id*** variable in the curl command must be the chat id of your chat with your bot so that you get the desired dmi weather image.
+====
+
 == Technologies
 
 * Spring Boot 2.0 with Webflux
